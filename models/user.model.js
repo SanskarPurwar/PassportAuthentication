@@ -23,10 +23,6 @@ const userSchema = new Schema({
         type : String ,
         required : [true , "password is required"]
     },
-    confirmPassword : {
-        type : String ,
-        required : [true , "password is required"]
-    },
     date : {
         type : ate ,
         default: Date.now
@@ -43,6 +39,7 @@ userSchema.pre("save" , async function(next){
     this.password = await bcrypt.hash(this.password , 10);
     return next()
 });
+
 
 userSchema.methods.isPasswordCorrect = async function(password){
     return await bcrypt.compare(password , this.password)

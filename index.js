@@ -6,9 +6,14 @@ import express from 'express'
 import connectDB from "./db/index.js";
 import expressLayouts from "express-ejs-layouts";
 
+
 const app = express();
 app.use(expressLayouts);
 app.set('view engine' , 'ejs');
+app.use(express.urlencoded( {extended: false}))
+
+
+
 
 //routes
 import userrouter from './routes/user.js'
