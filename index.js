@@ -6,12 +6,10 @@ import express from 'express'
 import connectDB from "./db/index.js";
 import expressLayouts from "express-ejs-layouts";
 
-
 const app = express();
 app.use(expressLayouts);
 app.set('view engine' , 'ejs');
 app.use(express.urlencoded( {extended: false}))
-
 
 
 
@@ -20,6 +18,7 @@ import userrouter from './routes/user.js'
 import homerouter from './routes/index.js'
 app.use('/' , homerouter);
 app.use('/users' ,  userrouter);
+
 
 
 //connection done
