@@ -43,13 +43,15 @@ const registerUser = asyncHandler( async (req,res)=> {
                 confirmPassword
             })
     }
-    const newUser = await new User({
+    const newUser = await User.create({
         fullName : name,
         email,
         password        
     });
     console.log(newUser);
-    res.send(`${newUser}`)
+    req.flash('success_msg' , 'You are registered successfully and can log in');
+    res.redirect('/users/login');
+    // res.send('dashboard.ejs')
 })
 
 
