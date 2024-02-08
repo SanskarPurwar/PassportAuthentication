@@ -24,7 +24,7 @@ const userSchema = new Schema({
         required : [true , "password is required"]
     },
     date : {
-        type : ate ,
+        type : Date ,
         default: Date.now
     }
 },
@@ -35,7 +35,7 @@ const userSchema = new Schema({
 
 // middleware
 userSchema.pre("save" , async function(next){
-    if(!isModified("password")) return next();
+    if(!this.isModified("password")) return next();
     this.password = await bcrypt.hash(this.password , 10);
     return next()
 });

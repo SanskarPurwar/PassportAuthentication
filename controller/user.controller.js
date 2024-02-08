@@ -1,23 +1,55 @@
 import {asyncHandler} from '../utils/asyncHandler.js';
+import {User} from '../models/user.model.js';
 
-const registerUser = asyncHandler( async (req, res) => {
-    // 1. collecting all input data,
-    // 2. check all fields are filled
-    // 3. check password and confirmPassword are same or not
-    // 4. Check if this email is pre-registered or not
-    // 5. save password
-    // 6. assigning of tokens
-    
-    // 1.
+
+const registerUser = asyncHandler( async (req,res)=> {
     const {name , email , password , confirmPassword} = req.body;
     let errors = []
+    console.log(name, email, password , confirmPassword);
+
     if(!name || !email || !password || !confirmPassword){
         errors.push( {msg: 'Please fill in all fields'} );
         console.log(errors);
     }
-    // if(password != confirmPassword){
-    //     throw new console.error();
-    // }
+
+    if(password !== confirmPassword){
+        errors.push({msg : 'Passwords do not match'});
+        console.log(errors);
+    }
+
+    if(password.length < 6){
+        errors.push({msg: "Password should have atleast 6 character"})
+        console.log(errors);
+    }
+
+    if(errors.length > 0){
+        res.render('register',{
+            errors,
+            name,
+            email,
+            password,
+            confirmPassword
+        })
+    }
+            // 
+    const user = await User.findOne({ email })
+    if(user){
+        errors.push({msg : "Email already exists"});
+            res.render('register',{
+                errors,
+                name,
+                email,
+                password,
+                confirmPassword
+            })
+    }
+    const newUser = await new User({
+        fullName : name,
+        email,
+        password        
+    });
+    console.log(newUser);
+    res.send(`${newUser}`)
 })
 
 
