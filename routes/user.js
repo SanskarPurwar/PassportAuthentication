@@ -45,8 +45,6 @@ router.post('/register' , (req,res)=> {
         res.send("pass");
     }
 
-
-    // res.send(`Hello Guys`)
 })
 
 export default router;
