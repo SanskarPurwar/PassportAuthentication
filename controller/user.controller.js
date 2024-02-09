@@ -48,10 +48,8 @@ const registerUser = asyncHandler( async (req,res)=> {
         email,
         password        
     });
-    console.log(newUser);
     req.flash('success_msg' , 'You are registered successfully and can log in');
     res.redirect('/users/login');
-    // res.send('dashboard.ejs')
 })
 
 

@@ -45,6 +45,8 @@ app.use(passport.session());
 
 app.use(flash());
 
+
+//global variable
 app.use( (req, res, next)=>{
     res.locals.success_msg = req.flash('success_msg');
     res.locals.error_msg = req.flash('error_msg');
@@ -58,5 +60,3 @@ import userrouter from './routes/user.js'
 import homerouter from './routes/index.js'
 app.use('/' , homerouter);
 app.use('/users' ,  userrouter);
-
-

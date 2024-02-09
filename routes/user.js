@@ -1,17 +1,18 @@
-// const express = require('express');
 import express from 'express'
-const router = express.Router();
 import passport from 'passport';
-// User model
+
+const router = express.Router();
 import { registerUser } from '../controller/user.controller.js';
 
+import { forwardAuthenticated} from '../config/auth.js'
+
 // login
-router.get('/login' , (req, res)=>{
+router.get('/login' ,forwardAuthenticated, (req, res)=>{
     res.render(`login`)
 })
 
 // register
-router.get('/register' , (req, res)=>{
+router.get('/register' ,forwardAuthenticated, (req, res)=>{
     res.render('register')
 })
 
@@ -25,6 +26,15 @@ router.post('/login' , (req,res,next)=>{
     })(req,res,next);
 });
 
+router.get('/logout' , (req , res)=>{
+    req.logout( (error) => {
+        if(error){
+            return next(error)
+        } 
+    });
+    req.flash('success_msg', 'logged out successfully');
+    res.redirect('/users/login');
+});  
 
 export default router;
 // module.exports = router;
